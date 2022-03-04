@@ -1,0 +1,48 @@
+h1 {
+  font-size: 30px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0.5rem;
+  flex: 1 0 33%;
+  justify-content: center;
+  &__img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    padding: 1rem;
+  }
+
+  &__text {
+    position: absolute;
+    transform: translate(108%, -602%);
+
+    color: aliceblue;
+    font-size: 25px;
+    // visibility: hidden;
+  }
+
+  &__container {
+    &:hover {
+      filter: brightness(70%);
+      transition: all 1s ease;
+      cursor: pointer;
+    }
+  }
+}
+
+.photos__text,
+.photos__img {
+  &:hover {
+    visibility: visible;
+  }
+}
+
+.visible {
+  visibility: visible;
+}
