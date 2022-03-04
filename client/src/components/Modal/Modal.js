@@ -1,6 +1,8 @@
 import Modal from "react-modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "./Modal.scss";
 
 export default function ModalContainer({ id }) {
   const [modal, setModal] = useState(false);
@@ -24,6 +26,7 @@ export default function ModalContainer({ id }) {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      width: "80%",
     },
   };
 
@@ -37,8 +40,8 @@ export default function ModalContainer({ id }) {
           setPhoto(res.data);
         })
         .catch((err) => {
-          setError(err);
-          console.log({ err }, id);
+          setError(err.data);
+          console.log({ err });
         });
     }
 
@@ -55,7 +58,7 @@ export default function ModalContainer({ id }) {
         style={customStyles}
         contentLabel="photo Modal"
       >
-        <button onClick={closeModal}>close</button>
+        <p onClick={closeModal}>X</p>
         {photo ? (
           <div className="modal">
             <div>
@@ -73,10 +76,14 @@ export default function ModalContainer({ id }) {
                 Views:{" "}
                 {photo.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </p>
-              <p>
-                Like what you see? Check out
-                <a href={photo.user.portfolio_url}> my Portfolio</a>
-              </p>
+              {photo.user.portfolio_url ? (
+                <p>
+                  Like what you see?
+                  <a href={photo.user.portfolio_url}> Check out My Portfolio</a>
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         ) : (

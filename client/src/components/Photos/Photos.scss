@@ -2,6 +2,12 @@ h1 {
   font-size: 30px;
   text-align: center;
   font-weight: 800;
+  margin: 5rem;
+}
+
+section {
+  background-color: rgba($color: #8d8d8d, $alpha: 1);
+  height: 100vh;
 }
 
 .photos {
@@ -11,6 +17,7 @@ h1 {
   padding: 0.5rem;
   flex: 1 0 33%;
   justify-content: center;
+
   &__img {
     width: 250px;
     height: 250px;

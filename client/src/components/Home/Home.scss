@@ -1,0 +1,78 @@
+article {
+  background-color: rgba($color: #8d8d8d, $alpha: 1);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+}
+
+article > div > h1,
+article > div > button {
+  margin: 3rem;
+}
+
+.home {
+  &__header {
+    color: #f5f5f5;
+    font-size: 3.6em;
+    letter-spacing: 0.1em;
+  }
+
+  &__text {
+    font-size: 1.4em;
+    overflow: hidden;
+    border-right: 0.15em solid #f5f5f5;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: 0.15em;
+    animation: typing 3.3s steps(40, end), blink-caret 0.75s step-end infinite;
+    color: #f5f5f5;
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes blink-caret {
+    from,
+    to {
+      border-color: transparent;
+    }
+    50% {
+      border-color: #b2ac88;
+    }
+  }
+
+  &__btn {
+    border: 1px;
+    background-color: #b2ac88;
+    border-radius: 50%;
+    width: 92px;
+    height: 84px;
+    cursor: pointer;
+    color: #f5f5f5;
+    font-size: 1rem;
+    transition: color 0.5s, transform 0.2s;
+
+    &:active {
+      transform: translateY(-20px);
+    }
+
+    &:after,
+    &:before {
+      border-radius: 3px;
+    }
+
+    &:hover {
+      transform: translateY(15px);
+      transition: all 0.2s linear 0s;
+    }
+  }
+}
