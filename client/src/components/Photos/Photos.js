@@ -6,6 +6,7 @@ export default function Photos() {
   const [photos, setPhotos] = useState();
   const [error, setError] = useState("");
   const [hovered, setHovered] = useState();
+  const [loadModal, setLoadModal] = useState(false);
 
   useEffect(() => {
     async function getData() {
@@ -18,7 +19,7 @@ export default function Photos() {
         })
         .catch((err) => {
           setError(err);
-          console.log(err);
+          console.log({ err });
         });
     }
     getData();
@@ -44,7 +45,11 @@ export default function Photos() {
                 <div
                   className={hovered ? "photos__text visible" : "photos__text"}
                 >
-                  <ModalContainer id={photo.id} />
+                  <ModalContainer
+                    id={photo.id}
+                    loadModal={loadModal}
+                    setLoadModal={setLoadModal}
+                  />
                 </div>
               </div>
             );

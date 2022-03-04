@@ -6,6 +6,7 @@ export default function ModalContainer({ id }) {
   const [modal, setModal] = useState(false);
   const [photo, setPhoto] = useState();
   const [error, setError] = useState("");
+  let cancel = false;
 
   const openModal = () => {
     setModal(true);
@@ -27,7 +28,6 @@ export default function ModalContainer({ id }) {
   };
 
   useEffect(() => {
-    Modal.setAppElement("body");
     async function getPhoto() {
       await axios
         .get(
@@ -38,13 +38,14 @@ export default function ModalContainer({ id }) {
         })
         .catch((err) => {
           setError(err);
-          console.log(err);
+          console.log({ err }, id);
         });
     }
+
     getPhoto();
+    Modal.setAppElement("body");
   }, [id]);
 
-  console.log(photo);
   return (
     <div>
       <button onClick={openModal}>Open Modal</button>
@@ -55,16 +56,32 @@ export default function ModalContainer({ id }) {
         contentLabel="photo Modal"
       >
         <button onClick={closeModal}>close</button>
-        <div className="modal">
-          <div>
-            <img src={photo.urls.small} alt="unsplash" />
+        {photo ? (
+          <div className="modal">
+            <div>
+              <img src={photo.urls.small} alt="unsplash" />
+            </div>
+            <div>
+              <h2>Username: {photo.user.username}</h2>
+              <p>IRL Name: {photo.user.name}</p>
+              <p>{photo.user.bio}</p>
+              <p>
+                Likes:{" "}
+                {photo.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </p>
+              <p>
+                Views:{" "}
+                {photo.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </p>
+              <p>
+                Like what you see? Check out
+                <a href={photo.user.portfolio_url}> my Portfolio</a>
+              </p>
+            </div>
           </div>
-          <div>
-            <h2>{photo.user.username}</h2>
-
-            <div>I am a modal</div>
-          </div>
-        </div>
+        ) : (
+          "Oops, Seems Like Something Went Wrong On Our End :(. Try again later!"
+        )}
       </Modal>
     </div>
   );
