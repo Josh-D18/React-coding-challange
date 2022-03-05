@@ -6,10 +6,6 @@ h1 {
   color: #b2ac88;
 }
 
-// section {
-//   // height: 278vh;
-// }
-
 .photos {
   display: flex;
   flex-wrap: wrap;
@@ -28,18 +24,21 @@ h1 {
   &__text {
     position: absolute;
     transform: translate(74%, -600%);
-    color: #f5f5f5;
+    color: #ffffff;
     font-size: 25px;
+    cursor: pointer;
+
     &:hover {
       display: block;
+      filter: brightness(2000%);
     }
   }
 
   &__container {
+    filter: brightness(90%);
     &:hover {
-      filter: brightness(70%);
+      filter: brightness(100%);
       transition: all 1s ease;
-      cursor: pointer;
     }
   }
 }

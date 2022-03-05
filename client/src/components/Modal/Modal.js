@@ -57,8 +57,6 @@ export default function ModalContainer({ id }) {
     setHover(false);
   };
 
-  console.log(modal);
-
   return (
     <div>
       <span
@@ -78,7 +76,9 @@ export default function ModalContainer({ id }) {
         <p className="modal__exitBtn" onClick={closeModal}>
           ❌
         </p>
-        {photo ? (
+        {!photo || error === undefined || error ? (
+          "Sorry Something Went Wrong :( Please Refresh The Page Or Comeback Another Time!"
+        ) : (
           <div className="modal">
             <div className="modal__container-left">
               <LazyLoadImage
@@ -88,6 +88,7 @@ export default function ModalContainer({ id }) {
                 className="modal__img"
               />
             </div>
+
             <div className="modal__container-right">
               <p>
                 <span>Username:</span> {photo.user.username}
@@ -95,10 +96,15 @@ export default function ModalContainer({ id }) {
               <p>
                 <span>IRL Name:</span> {photo.user.name}
               </p>
-              <p>
-                <span>Bio: </span>
-                {photo.user.bio}
-              </p>
+              {photo.user.bio ? (
+                <p>
+                  <span>Bio: </span>
+                  {photo.user.bio}
+                </p>
+              ) : (
+                ""
+              )}
+
               <p>
                 <span>Likes: </span>
                 {photo.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -120,8 +126,6 @@ export default function ModalContainer({ id }) {
               )}
             </div>
           </div>
-        ) : (
-          "Oops, Seems Like Something Went Wrong On Our End :(. Try again later!"
         )}
       </Modal>
     </div>

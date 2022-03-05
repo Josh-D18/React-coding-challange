@@ -13,26 +13,34 @@ export default function Photos() {
     async function getData() {
       await axios
         .get(
-          `https://api.unsplash.com/photos?per_page=69&client_id=${process.env.REACT_APP_client_id}`
+          `https://api.unsplash.com/photos?per_page=31&client_id=${process.env.REACT_APP_client_id}`
         )
         .then((res) => {
           setPhotos(res.data);
         })
         .catch((err) => {
           setError(err.data);
+          console.log({ err });
         });
     }
     getData();
   }, []);
 
-  //   const toggleHover = () => setHovered(!hovered);
-
   return (
     <>
-      <h1>Photo Gallery</h1>
-      <p className="photo__text">
-        Click On The Picture For More Details About The Image!!
-      </p>
+      {error === undefined || error ? (
+        <p className="photo__text">
+          Sorry Something Went Wrong :( Please Refresh The Page Or Comeback
+          Another Time!
+        </p>
+      ) : (
+        <>
+          <h1>Photo Gallery</h1>
+          <p className="photo__text">
+            Hover On The Image And Click On 'View More' For More Details!!
+          </p>
+        </>
+      )}
       <article className="photos">
         {photos &&
           photos.map((photo) => {
