@@ -2,13 +2,13 @@ import Modal from "react-modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import "./Modal.scss";
 
 export default function ModalContainer({ id }) {
   const [modal, setModal] = useState(false);
   const [photo, setPhoto] = useState();
   const [error, setError] = useState("");
-  let cancel = false;
 
   const openModal = () => {
     setModal(true);
@@ -41,7 +41,6 @@ export default function ModalContainer({ id }) {
         })
         .catch((err) => {
           setError(err.data);
-          console.log({ err });
         });
     }
 
@@ -49,37 +48,72 @@ export default function ModalContainer({ id }) {
     Modal.setAppElement("body");
   }, [id]);
 
+  const [hover, setHover] = useState(false);
+  const onHover = () => {
+    setHover(true);
+  };
+
+  const onLeave = () => {
+    setHover(false);
+  };
+
+  console.log(modal);
+
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
+      <span
+        className={hover ? "visible" : "hover__text"}
+        onClick={openModal}
+        onMouseEnter={onHover}
+        onMouseLeave={onLeave}
+      >
+        View More!
+      </span>
       <Modal
         isOpen={modal}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="photo Modal"
       >
-        <p onClick={closeModal}>X</p>
+        <p className="modal__exitBtn" onClick={closeModal}>
+          ❌
+        </p>
         {photo ? (
           <div className="modal">
-            <div>
-              <img src={photo.urls.small} alt="unsplash" />
+            <div className="modal__container-left">
+              <LazyLoadImage
+                effect="blur"
+                src={photo.urls.small}
+                alt="unsplash"
+                className="modal__img"
+              />
             </div>
-            <div>
-              <h2>Username: {photo.user.username}</h2>
-              <p>IRL Name: {photo.user.name}</p>
-              <p>{photo.user.bio}</p>
+            <div className="modal__container-right">
               <p>
-                Likes:{" "}
+                <span>Username:</span> {photo.user.username}
+              </p>
+              <p>
+                <span>IRL Name:</span> {photo.user.name}
+              </p>
+              <p>
+                <span>Bio: </span>
+                {photo.user.bio}
+              </p>
+              <p>
+                <span>Likes: </span>
                 {photo.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </p>
               <p>
-                Views:{" "}
+                <span>Views: </span>
                 {photo.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </p>
               {photo.user.portfolio_url ? (
                 <p>
-                  Like what you see?
-                  <a href={photo.user.portfolio_url}> Check out My Portfolio</a>
+                  <span>Like what you see?</span>
+                  <a href={photo.user.portfolio_url}>
+                    {" "}
+                    Check out My Portfolio!
+                  </a>
                 </p>
               ) : (
                 ""

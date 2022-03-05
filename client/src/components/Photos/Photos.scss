@@ -1,14 +1,14 @@
 h1 {
-  font-size: 30px;
   text-align: center;
   font-weight: 800;
-  margin: 5rem;
+  font-size: 56px;
+  margin-bottom: 2rem;
+  color: #b2ac88;
 }
 
-section {
-  background-color: rgba($color: #8d8d8d, $alpha: 1);
-  height: 100vh;
-}
+// section {
+//   // height: 278vh;
+// }
 
 .photos {
   display: flex;
@@ -27,11 +27,12 @@ section {
 
   &__text {
     position: absolute;
-    transform: translate(108%, -602%);
-
-    color: aliceblue;
+    transform: translate(74%, -600%);
+    color: #f5f5f5;
     font-size: 25px;
-    // display: none;
+    &:hover {
+      display: block;
+    }
   }
 
   &__container {
@@ -39,6 +40,48 @@ section {
       filter: brightness(70%);
       transition: all 1s ease;
       cursor: pointer;
+    }
+  }
+}
+
+.photo {
+  &__text {
+    display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    &__text {
+      display: block;
+      font-size: 1.4em;
+      overflow: hidden;
+      border-right: 0.15em solid #b2ac88;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: 0.15em;
+      animation: typing 3.3s steps(40, end), blink-caret 1.75s step-end infinite;
+      color: #b2ac88;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+        border: 0;
+      }
+    }
+
+    @keyframes blink-caret {
+      from,
+      to {
+        border-color: transparent;
+      }
+      10% {
+        border-color: #b2ac88;
+      }
     }
   }
 }

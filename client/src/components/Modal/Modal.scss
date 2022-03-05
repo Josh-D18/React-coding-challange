@@ -19,4 +19,36 @@
   & > div > img {
     width: 75%;
   }
+
+  &__container-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+
+  &__exitBtn {
+    cursor: pointer;
+  }
+
+  &__container-right > p > span {
+    font-weight: bold;
+  }
+
+  &__container-right > p > a {
+    text-decoration: none;
+    color: #b2ac88;
+  }
+
+  &__img {
+    width: 90%;
+  }
+}
+.visible {
+  filter: brightness(200%);
+  visibility: visible;
+}
+
+.hover__text {
+  //   visibility: hidden;
 }

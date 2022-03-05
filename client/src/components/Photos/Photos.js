@@ -8,7 +8,6 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 export default function Photos() {
   const [photos, setPhotos] = useState();
   const [error, setError] = useState("");
-  const [hovered, setHovered] = useState();
 
   useEffect(() => {
     async function getData() {
@@ -21,7 +20,6 @@ export default function Photos() {
         })
         .catch((err) => {
           setError(err.data);
-          console.log({ err });
         });
     }
     getData();
@@ -32,6 +30,9 @@ export default function Photos() {
   return (
     <>
       <h1>Photo Gallery</h1>
+      <p className="photo__text">
+        Click On The Picture For More Details About The Image!!
+      </p>
       <article className="photos">
         {photos &&
           photos.map((photo) => {
@@ -42,12 +43,8 @@ export default function Photos() {
                   className="photos__img"
                   alt="unsplash"
                   effect="blur"
-                  //   onMouseEnter={toggleHover}
-                  //   onMouseLeave={toggleHover}
                 />
-                <div
-                  className={hovered ? "photos__text visible" : "photos__text"}
-                >
+                <div className={"photos__text"}>
                   <ModalContainer id={photo.id} />
                 </div>
               </div>
