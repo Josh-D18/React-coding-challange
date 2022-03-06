@@ -4,6 +4,7 @@ import "./Photos.scss";
 import ModalContainer from "../Modal/Modal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import API from "../../config";
 
 export default function Photos() {
   const [photos, setPhotos] = useState();
@@ -12,20 +13,28 @@ export default function Photos() {
   useEffect(() => {
     async function getData() {
       await axios
-        .get(
-          `https://api.unsplash.com/photos?per_page=31&client_id=${process.env.REACT_APP_client_id}`
-        )
+        .get(`${API}?per_page=5&client_id=${process.env.REACT_APP_client_id}`)
         .then((res) => {
           setPhotos(res.data);
         })
         .catch((err) => {
           setError(err.data);
-          console.log({ err });
+
+          if (err.response.data === "Rate Limit Exceeded") {
+            return "Sorry, We Have Reached The Max Number Of Requests You Can Make In An Hour. Please Come Back Later!";
+          }
+
+          if (!photos) {
+            return <span className="photo__text">Loading...</span>;
+          }
         });
     }
     getData();
-  }, []);
+  }, [photos]);
 
+  // if (!photos) {
+  //   return <span className="photo__text">Loading...</span>;
+  // }
   return (
     <>
       {error === undefined || error ? (
