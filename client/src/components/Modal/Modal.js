@@ -4,8 +4,8 @@ import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "./Modal.scss";
-
-export default function ModalContainer({ id }) {
+import API from "../../config";
+export default function ModalContainer({ id, clickPhoto }) {
   const [modal, setModal] = useState(false);
   const [photo, setPhoto] = useState();
   const [error, setError] = useState("");
@@ -30,12 +30,10 @@ export default function ModalContainer({ id }) {
     },
   };
 
-  useEffect(() => {
-    async function getPhoto() {
+  const getData = () => {
+    async function getSinglePhoto() {
       await axios
-        .get(
-          `https://api.unsplash.com/photos/${id}?client_id=${process.env.REACT_APP_client_id}`
-        )
+        .get(`${API}${id}`)
         .then((res) => {
           setPhoto(res.data);
         })
@@ -44,9 +42,13 @@ export default function ModalContainer({ id }) {
         });
     }
 
-    getPhoto();
+    getSinglePhoto();
     Modal.setAppElement("body");
-  }, [id]);
+  };
+
+  if (clickPhoto) {
+    getData();
+  }
 
   const [hover, setHover] = useState(false);
   const onHover = () => {
@@ -56,7 +58,7 @@ export default function ModalContainer({ id }) {
   const onLeave = () => {
     setHover(false);
   };
-
+  console.log(photo);
   return (
     <div>
       <span
@@ -83,7 +85,7 @@ export default function ModalContainer({ id }) {
             <div className="modal__container-left">
               <LazyLoadImage
                 effect="blur"
-                src={photo.urls.small}
+                src={photo.imageSmall}
                 alt="unsplash"
                 className="modal__img"
               />
@@ -91,15 +93,15 @@ export default function ModalContainer({ id }) {
 
             <div className="modal__container-right">
               <p>
-                <span>Username:</span> {photo.user.username}
+                <span>Username:</span> {photo.username}
               </p>
               <p>
-                <span>IRL Name:</span> {photo.user.name}
+                <span>IRL Name:</span> {photo.name}
               </p>
               {photo.user.bio ? (
                 <p>
                   <span>Bio: </span>
-                  {photo.user.bio}
+                  {photo.bio}
                 </p>
               ) : (
                 ""
@@ -116,10 +118,7 @@ export default function ModalContainer({ id }) {
               {photo.user.portfolio_url ? (
                 <p>
                   <span>Like what you see?</span>
-                  <a href={photo.user.portfolio_url}>
-                    {" "}
-                    Check out My Portfolio!
-                  </a>
+                  <a href={photo.portfolioUrl}> Check out My Portfolio!</a>
                 </p>
               ) : (
                 ""

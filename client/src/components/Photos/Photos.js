@@ -9,17 +9,18 @@ import API from "../../config";
 export default function Photos() {
   const [photos, setPhotos] = useState();
   const [error, setError] = useState("");
+  const [clickPhoto, setClickPhoto] = useState(false);
 
   useEffect(() => {
     async function getData() {
       await axios
-        .get(`${API}?per_page=5&client_id=${process.env.REACT_APP_client_id}`)
+        .get(`${API}`)
         .then((res) => {
           setPhotos(res.data);
         })
         .catch((err) => {
           setError(err.data);
-
+          console.log({ err });
           if (err.response.data === "Rate Limit Exceeded") {
             return "Sorry, We Have Reached The Max Number Of Requests You Can Make In An Hour. Please Come Back Later!";
           }
@@ -30,11 +31,12 @@ export default function Photos() {
         });
     }
     getData();
-  }, [photos]);
+  }, []);
 
-  // if (!photos) {
-  //   return <span className="photo__text">Loading...</span>;
-  // }
+  const getPhoto = () => {
+    setClickPhoto(!clickPhoto);
+  };
+
   return (
     <>
       {error === undefined || error ? (
@@ -54,15 +56,16 @@ export default function Photos() {
         {photos &&
           photos.map((photo) => {
             return (
-              <div key={photo.id} className="photos__container">
+              <div key={photo._id} className="photos__container">
                 <LazyLoadImage
-                  src={photo.urls.regular}
+                  src={photo.image}
                   className="photos__img"
                   alt="unsplash"
                   effect="blur"
+                  onClick={getPhoto}
                 />
                 <div className={"photos__text"}>
-                  <ModalContainer id={photo.id} />
+                  <ModalContainer id={photo._id} clickPhoto={clickPhoto} />
                 </div>
               </div>
             );

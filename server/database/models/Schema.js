@@ -26,6 +26,9 @@ const PhotoSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  imageSmall: {
+    type: String,
+  },
 });
 
 const PhotoModel = mongoose.model("Photo", PhotoSchema);

@@ -1,16 +1,23 @@
 require("dotenv").config();
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
-var addtodatabaseRouter = require("./routes/addtodatabase");
-var photosRouter = require("./routes/photos");
+const addtodatabaseRouter = require("./routes/addtodatabase");
+const photosRouter = require("./routes/photos");
+const cors = require("cors");
 
-var app = express();
-
+const app = express();
+app.use(cors());
 // view engine setup
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000/"],
+  })
+);
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -34,7 +41,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.send("error");
 });
 
 module.exports = app;
