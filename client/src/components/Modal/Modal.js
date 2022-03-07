@@ -5,7 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "./Modal.scss";
 import API from "../../config";
-export default function ModalContainer({ id, clickPhoto }) {
+export default function ModalContainer({ id }) {
   const [modal, setModal] = useState(false);
   const [photo, setPhoto] = useState();
   const [error, setError] = useState("");
@@ -30,8 +30,8 @@ export default function ModalContainer({ id, clickPhoto }) {
     },
   };
 
-  const getData = () => {
-    async function getSinglePhoto() {
+  useEffect(() => {
+    async function getPhoto() {
       await axios
         .get(`${API}${id}`)
         .then((res) => {
@@ -42,13 +42,10 @@ export default function ModalContainer({ id, clickPhoto }) {
         });
     }
 
-    getSinglePhoto();
-    Modal.setAppElement("body");
-  };
+    getPhoto();
 
-  if (clickPhoto) {
-    getData();
-  }
+    Modal.setAppElement("body");
+  }, [id]);
 
   const [hover, setHover] = useState(false);
   const onHover = () => {
@@ -58,7 +55,7 @@ export default function ModalContainer({ id, clickPhoto }) {
   const onLeave = () => {
     setHover(false);
   };
-  console.log(photo);
+
   return (
     <div>
       <span
@@ -98,7 +95,7 @@ export default function ModalContainer({ id, clickPhoto }) {
               <p>
                 <span>IRL Name:</span> {photo.name}
               </p>
-              {photo.user.bio ? (
+              {photo.bio ? (
                 <p>
                   <span>Bio: </span>
                   {photo.bio}
@@ -106,16 +103,19 @@ export default function ModalContainer({ id, clickPhoto }) {
               ) : (
                 ""
               )}
-
-              <p>
-                <span>Likes: </span>
-                {photo.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-              </p>
-              <p>
-                <span>Views: </span>
-                {photo.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-              </p>
-              {photo.user.portfolio_url ? (
+              {photo.likes && (
+                <p>
+                  <span>Likes: </span>
+                  {photo.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </p>
+              )}
+              {photo.views && (
+                <p>
+                  <span>Views: </span>
+                  {photo.views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </p>
+              )}
+              {photo.portfolioUrl ? (
                 <p>
                   <span>Like what you see?</span>
                   <a href={photo.portfolioUrl}> Check out My Portfolio!</a>
