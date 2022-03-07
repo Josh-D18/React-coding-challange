@@ -7,7 +7,7 @@ This project was created with React, SCSS and Mongodb.
 If you want to run the project locally, you can do it two ways. One way is to setup your own mongodb database and populate it using the addtodatabase.js file that has a route that will do it for you. Or you can pull the images and extra information from the unsplash api.
 
 If you want to use the unsplash api, you are going to need to modify the api get request url in both the modal and photos components. You will have to format it like this: https://api.unsplash.com/photos/?client_id=<YOUR CLIENT ID>. You will also need an client id that is given to you when you sign up for 
-Unsplash Developers (It's free). 
+Unsplash Developers (It's free). Make sure to also change the way the response object is accessed (ex. id={photo._id} --> id={photo.id}) Becasue you are getting the info from the api and not from the mongodb database, the way it's accessed is different.
  
 
 # MongoDB Setup 
