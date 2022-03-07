@@ -4,12 +4,15 @@ import axios from "axios";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "./Modal.scss";
-import API from "../../config";
+import URL from "../../config";
+
 export default function ModalContainer({ id }) {
   const [modal, setModal] = useState(false);
   const [photo, setPhoto] = useState();
   const [error, setError] = useState("");
+  const [hover, setHover] = useState(false);
 
+  // Two functions that open and close the modal
   const openModal = () => {
     setModal(true);
   };
@@ -18,6 +21,7 @@ export default function ModalContainer({ id }) {
     setModal(false);
   };
 
+  // Custom styles for the modal. This gives the modal it's background and positions it
   const customStyles = {
     content: {
       top: "50%",
@@ -33,7 +37,7 @@ export default function ModalContainer({ id }) {
   useEffect(() => {
     async function getPhoto() {
       await axios
-        .get(`${API}${id}`)
+        .get(`${URL}${id}`)
         .then((res) => {
           setPhoto(res.data);
         })
@@ -47,7 +51,6 @@ export default function ModalContainer({ id }) {
     Modal.setAppElement("body");
   }, [id]);
 
-  const [hover, setHover] = useState(false);
   const onHover = () => {
     setHover(true);
   };

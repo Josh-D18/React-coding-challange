@@ -4,7 +4,7 @@ import "./Photos.scss";
 import ModalContainer from "../Modal/Modal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import API from "../../config";
+import URL from "../../config";
 
 export default function Photos() {
   const [photos, setPhotos] = useState();
@@ -13,12 +13,14 @@ export default function Photos() {
   useEffect(() => {
     function getData() {
       try {
+        // Returning an axios call and setting state with the response data. The setPhotos function is storing the response data in photos
         return axios
-          .get(`${API}`)
+          .get(`${URL}`)
           .then((res) => {
             setPhotos(res.data);
           })
           .catch((err) => {
+            // Storing the error information in error and also checking if the hourly rate has been passed.
             setError(err.data);
             if (err.response.data === "Rate Limit Exceeded") {
               return "Sorry, We Have Reached The Max Number Of Requests You Can Make In An Hour. Please Come Back Later!";
