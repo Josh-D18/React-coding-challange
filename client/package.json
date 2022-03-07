@@ -16,7 +16,7 @@
     "sass": "^1.49.9",
     "web-vitals": "^2.1.4"
   },
-  "cors": "http://localhost:8080",
+  "cors": "https://galleryphotoss.herokuapp.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

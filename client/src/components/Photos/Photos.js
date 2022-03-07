@@ -42,7 +42,7 @@ export default function Photos() {
         <>
           <h1>Photo Gallery</h1>
           <p className="photo__text">
-            Click On 'View More' That Is Hi In The Center Of The Image For More
+            Click On 'View More' That Is In The Center Of The Image For More
             Details!!
           </p>
         </>

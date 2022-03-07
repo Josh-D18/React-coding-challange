@@ -14,7 +14,7 @@ router.get("/", async function (req, res, next) {
 });
 
 router.get("/:id", async function (req, res, next) {
-  let photo = await PhotoModel.findById({ _id: req.params.id });
+  let photo = await PhotoModel.findOne({ _id: req.params.id });
 
   try {
     res.status(200).json(photo);
