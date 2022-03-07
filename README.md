@@ -1,7 +1,7 @@
 # React-coding-challange
 TechGuilds React coding challenge
 
-##Live Site: https://distracted-stonebraker-d5cbc6.netlify.app/
+## Live Site: https://distracted-stonebraker-d5cbc6.netlify.app/
 This project was created with React, SCSS and Mongodb.
 
 If you want to run the project locally, you can do it two ways. One way is to setup your own mongodb database and populate it using the addtodatabase.js file that has a route that will do it for you. Or you can pull the images and extra information from the unsplash api.
