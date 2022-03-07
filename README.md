@@ -1,35 +1,61 @@
-This is a coding challenge for prospective front-end and full-stack developer applicants applying to TechGuilds.
+# React-coding-challange
+TechGuilds React coding challenge
 
-If you're unfamiliar with React, Facebook has put together a helpful tutorial that provides a quick introduction to the basics: https://reactjs.org/docs/hello-world.html
+## Live Site: https://distracted-stonebraker-d5cbc6.netlify.app/
+This project was created with React, SCSS and Mongodb.
 
-## Goal:
+If you want to run the project locally, you can do it two ways. One way is to setup your own mongodb database and populate it using the addtodatabase.js file that has a route that will do it for you. Or you can pull the images and extra information from the unsplash api.
 
-#### Build a simple React app that allows viewing and interacting with a grid of photos from Unsplash
+If you want to use the unsplash api, you are going to need to modify the api get request url in both the modal and photos components. You will have to format it like this: https://api.unsplash.com/photos/?client_id=<YOUR CLIENT ID>. You will also need an client id that is given to you when you sign up for 
+Unsplash Developers (It's free). Make sure to also change the way the response object is accessed (ex. id={photo._id} --> id={photo.id}) Becasue you are getting the info from the api and not from the mongodb database, the way it's accessed is different.
+ 
 
-- [ ] Fork this repo into your GitHub account. Keep it public until we have been able to review it.
-- [ ] Use `npx create-next-app your_app_name` to set up a Next.js application as shown here: 
-https://nextjs.org/learn/basics/create-nextjs-app .
-- [ ] Refer to the Unsplash API docs here to set up a developer account: https://unsplash.com/documentation.
-- [ ] Display a grid of photos in your React app. Use the `GET /photos` endpoint from the Unsplash API to get a set of curated images.
-- [ ] The grid of photos should preserve the aspect ratio of the photos it's displaying, meaning it shouldn't crop the image in any way.
-- [ ] The grid should be responsive, and should work in both portrait and landscape orientations on both mobile and desktop browsers.
-- [ ] The grid should support infinite scrolling, using a lazy-load strategy to fetch additional images as the user scrolls.
-- [ ] You're free to use existing open source React components or Javascript packages/libraries from npm to complete this task.
-- [ ] You're free to use any UI framework such as Tailwind, Material UI etc.
-- [ ] Write necessary test cases.
-- [ ] Deploy your app to Vercel or any other hosting provider. 
-Refer to docs how to deploy Next.js app to vercel: https://vercel.com
+# MongoDB Setup 
+1. First Sign Up For MongoDB Atlas (It's Free)
 
-### Extra Points:
- - Extra points if you use Typescript.
- - When the user taps on a photo on the grid it should show the full photo in a full width lightbox popup with more information about the photo.
- - The lightbox popup should be dismissible with a close button.
- - Big bonus for full stack developers: Build photos table and an API endpoint, and consume it fro the front-end layer instead of unsplash. You can build it with either MongoDB, Node and express; or .NET stack SQL Server, and ASP.NET.   
+2. The website will ask to choose a cluster. Choose Starter Clusters and click on Create a cluster.
 
-### Evaluation:
-- [ ] The app should build without errors (typically using `npm run build`). If there are necessary steps required to get it to compile, those should be covered in README.md.
-- [ ] No crashes or bugs .
-- [ ] The app should pass all test cases.
-- [ ] The app should be deployed to any hosting provider and url of the app should be found in README.md.
-- [ ] Code is easily understood and communicative (eg. comments, variable names, etc).
-- [ ] GitHub commit history is consistent, easy to follow and understand.
+3. After That In the Cloud Provider & Region section, the aws option should be selected as the default provider, but you can select any provider. All three platforms support the free tier.
+
+4. Beneath the list of providers, select a region.
+
+5. Expand the Cluster Tier section and ensure that M0 Sandbox is selected. This is the free M0 service level.
+
+6. Expand the Cluster Name section and type Cluster1 in the text box.
+
+7. Click the Create Cluster button at the bottom of the web page.
+
+## Create a new user for the database
+On the left side of screen, click on Database Access.
+1. Click the green Add New Database User button.
+2. In the modal, enter a new username and password.
+3. Under Database User Privileges, leave this as the default option, Read and write to any database.
+4. Click the Add User button to create your new user.
+ 
+## Allow access from all IP addresses
+1. On the left side of the screen, click on Network Access.
+
+2. Click the green Add IP Address button.
+
+3. In the modal, click the ALLOW ACCESS FROM ANYWHERE button. You should see 0.0.0.0/0 in the Access List Entry entry field.
+
+4. Click the green Confirm button.
+
+## Connect to your cluster
+1. Click on the green Get Started button in the bottom left of your screen should now show you the final step, Connect to your cluster, click on it.
+2. On the left side of the screen, click on Clusters.
+3. Click the Connect button for your cluster.
+4. In the popup modal, click on Connect your application.
+5. You should see the URI you'll use to connect to your database similar to this: mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/<db-name>?retryWrites=true&w=majority.
+6. Click the Copy button to copy your URI to your clipboard.
+7. Inside of the .env file add the URI to DB_URI and then save the file. (Make sure you change <username> and <password> to your username and password.
+
+# Setting Up Project
+1. For the backend create .env files and add the PORT number of 8080 to PORT and add your URI to the DB_URI (URI looks like this: mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/<db-name>?retryWrites=true&w=majority.. On the client-side, to avoid errors create the env file and add REACT_APP_PRODUCTION_URL = .You would only need to add a URL if you want to deploy the site. The URL you would add would be the production URL. Also add REACT_APP_client_id to it. Paste in your client_id.  
+
+2. cd into /server and run npm install. Then cd into /client and run npm install.
+  
+3. To start the project up type npm start in both the server and client directories   
+
+  ## Populate MongoDb
+ 3.5 Once you have the express server running make get requests to /addtodatabase on your local server. Each request will populate your database with random pictures
