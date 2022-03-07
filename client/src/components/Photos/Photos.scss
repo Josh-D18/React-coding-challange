@@ -47,6 +47,19 @@ h1 {
   &__text {
     display: none;
   }
+  &__text-small {
+    display: none;
+    margin: 0;
+  }
+  @media screen and (max-width: 767px) {
+    &__text-small {
+      color: #b2ac88;
+      text-align: center;
+      display: block;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+  }
 
   @media screen and (min-width: 768px) {
     &__text {
