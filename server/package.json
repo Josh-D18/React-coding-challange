@@ -6,7 +6,6 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
   },
-  "cors": "http://localhost:8080",
   "dependencies": {
     "axios": "^0.26.0",
     "cookie-parser": "~1.4.4",

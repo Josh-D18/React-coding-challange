@@ -4,6 +4,7 @@ const { PhotoModel } = require("../database/models/Schema");
 
 router.get("/", async function (req, res, next) {
   let photos = await PhotoModel.find();
+
   try {
     res.json(photos);
   } catch (err) {
